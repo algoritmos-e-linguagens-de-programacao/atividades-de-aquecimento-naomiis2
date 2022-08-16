@@ -1,4 +1,6 @@
 a = input()
 b = input()
 
-print(a + b)
+x = int(a) + int(b) 
+
+print(f"x = {x}")
