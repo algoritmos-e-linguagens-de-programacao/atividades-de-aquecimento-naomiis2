@@ -1,56 +1,95 @@
-from node import Node
+class TADFracao:
+    num = 1
+    denominador = 1
 
-class ListaDin:
-    home = None
+    def _init_(self, num, denominador):
+        self.num = num
+        self.denominador = denominador
 
-    def _init_(self):
-        self.home = None
+    def adicionar(self, fracao):
+        num = (self.num * fracao.denominador) + (fracao.num *
+                                                       self.denominador)
+        deno = (self.denominador * fracao.denominador)
+        return Fracao(num, deno)
 
-    def adicionar(self, i):
-        if (self.home == None):
-            self.home = Node(i, None)
-
+    def sub(self, fracao):
+        if (self.denominador
+                == fracao.denominador) & (self.num != fracao.num):
+            num = (self.num - fracao.num)
+            denominador = (self.denominador)
+        elif (self.denominador == fracao.denominador) & (self.num
+                                                         == fracao.num):
+            num = 0
+            deno = 0
         else:
-            aux = self.home
-            while (aux.proximo != None):
-                aux = aux.proximo
+            num = (self.num * fracao.denominador) - (fracao.num *
+                                                           self.denominador)
+            deno = (self.denominador * fracao.denominador)
+        return Fracao(num, deno)
 
-            aux.proximo = Node(i, None)
+    def multiplicar(self, fracao):
+        num = (self.num * fracao.num)
+        deno = (self.denominador * fracao.denominador)
+        return Fracao(num, deno)
 
-    def mostrar(self):
-        aux = self.home
-        print("[", end='')
+    def infinito():
+        i = 0
+        while True:
+            yield i
+            i += 1
 
-        while (aux != None):
-            print(f"{aux.valor}, ", end='')
-            aux = aux.proximo
+    def simplificar(self):        
+      loop = True
+      j = 2
+      
+      while loop == True:               
+        control = False
+        if self.num / j == 1 or self.denominador / j == 1:
+          loop = False
+        
+        if self.num % j == 0 and self.denominador % j == 0:       
+          self.num = self.num / j
+          self.denominador = self.denominador / j
+          control = True
+          
+        else:          
+          j += 1
+          control = True
 
-        print("]")
+        if control == False:
+          loop = False
+          
+          
+      return fracao(self.num, self.denominador)
 
-    def remover_apenas_um(self, i):
-        aux = self.home   
+    def gcd(self):
+        while self.denominador != 0:
+            t = self.denominador
+            self.denominador = self.num % self.denominador
+            self.num = t
+        return self.num
 
-        if aux == None:         
-          return
+    def reduce(self):
+        greatest = self.gcd(self)
+        num = self.num / greatest
+        deno = self.denominador / greatest
+        return Fracao(num, deno)
 
-        if aux != None:
-          if aux.valor == i:
-            self.home = self.proximo
-            self = None
-                    
+    def resolver(self):
+        return self.num / self.denominador
 
-        while aux != None:         
-          if aux.i == i:           
-            break
-          prev = aux
-          aux = aux.proximo
+    def _str_(self):
+        return f"{self.num}/{self.denominador}"
 
-        prev.proximo = aux.proximo
-        aux = None
 
-    def remover_todos(self, i):
-        aux = self.home
+fracao1 = Fracao(24,60)
+print(f"Simplificacao: {fracao1.simplificar()}")
 
-        while aux != None:
-          self.remover_apenas_um(i)
-          aux = aux.proximo
+fracao1 = Fracao(56,75)
+print(f"Simplificacao: {fracao1.simplificar()}")
+
+fracao1 = Fracao(8,20)
+print(f"Simplificacao: {fracao1.simplificar()}")
+
+fracao1 = Fracao(200,350)
+print(f"Simplificacao: {fracao1.simplificar()}")
